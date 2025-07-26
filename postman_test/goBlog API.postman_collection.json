@@ -1,0 +1,416 @@
+{
+	"info": {
+		"_postman_id": "469f8cd8-f395-4455-9875-d70f26978c95",
+		"name": "goBlog API",
+		"description": "测试 goBlog 的 RESTful API 接口",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46976895",
+		"_collection_link": "https://technical-physicist-41644172-2374408.postman.co/workspace/6a9e9d54-97ec-45f8-81cd-71ea20eef1bd/collection/46976895-469f8cd8-f395-4455-9875-d70f26978c95?action=share&source=collection_link&creator=46976895"
+	},
+	"item": [
+		{
+			"name": "用户注册",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"123456789\",\n  \"nickname\": \"测试用户\",\n  \"password\": \"123456\",\n  \"avatar\": \"https://example.com/avatar.png\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户登录",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNmQxM2Q2ZGMtODQ5ZC00YWEzLTg1OTEtMGI0YmU1ZjE0MWVjIiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTM5NTM1OTAsImlhdCI6MTc1MzM0ODc5MCwiaXNzIjoiZ29ibG9nIn0.u8XMG7pLX_trOwsiLZ7U0nvVLT7W0voly-I9ql3B1jU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"123456789\",\n  \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建帖子",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTQwNTMzMzEsImlhdCI6MTc1MzQ0ODUzMSwiaXNzIjoiZ29ibG9nIn0.7sCI70j6s4hX0awT4m5vyDFPHLhi2kdX-2vhZr01l6k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"第一篇博客\",\n  \"content\": \"这是正文内容\",\n  \"cover\": \"技术\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取帖子列表",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTM5NzA4MDUsImlhdCI6MTc1MzM2NjAwNSwiaXNzIjoiZ29ibG9nIn0.8dHyAL-w9eGBJtuf9qqYwfoXnachuZB1vgDbbI9ndBU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/posts?title=第一",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "第一"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建评论",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTQwNTM3NjUsImlhdCI6MTc1MzQ0ODk2NSwiaXNzIjoiZ29ibG9nIn0.3FBAqyx5yr8LArkkruOrykn_TurB4AEmLhxpgthirRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"content\": \"这是评论内容\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/posts/a38c98d1-c250-4f42-a5da-8f828f5fe567/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"a38c98d1-c250-4f42-a5da-8f828f5fe567",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取评论",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTQwNTM3NjUsImlhdCI6MTc1MzQ0ODk2NSwiaXNzIjoiZ29ibG9nIn0.3FBAqyx5yr8LArkkruOrykn_TurB4AEmLhxpgthirRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/posts/a38c98d1-c250-4f42-a5da-8f828f5fe567/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"a38c98d1-c250-4f42-a5da-8f828f5fe567",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "收藏帖子",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTQwNTM3NjUsImlhdCI6MTc1MzQ0ODk2NSwiaXNzIjoiZ29ibG9nIn0.3FBAqyx5yr8LArkkruOrykn_TurB4AEmLhxpgthirRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/posts/a38c98d1-c250-4f42-a5da-8f828f5fe567/star",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"a38c98d1-c250-4f42-a5da-8f828f5fe567",
+						"star"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取消收藏",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTQwNTM3NjUsImlhdCI6MTc1MzQ0ODk2NSwiaXNzIjoiZ29ibG9nIn0.3FBAqyx5yr8LArkkruOrykn_TurB4AEmLhxpgthirRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"post_id\": \"{{post_id}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/posts/ec3202fb-ba28-4f84-ac3b-987ec6bfcfd8/star",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"ec3202fb-ba28-4f84-ac3b-987ec6bfcfd8",
+						"star"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取收藏列表",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTQwNTM3NjUsImlhdCI6MTc1MzQ0ODk2NSwiaXNzIjoiZ29ibG9nIn0.3FBAqyx5yr8LArkkruOrykn_TurB4AEmLhxpgthirRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/star",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"star"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登出",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYwMjJmNDYtNmMxYy00MWY1LTg2NGQtNjY3ZWZlZjdiY2Y2Iiwibmlja25hbWUiOiLmtYvor5XnlKjmiLciLCJleHAiOjE3NTM5NzA4MDUsImlhdCI6MTc1MzM2NjAwNSwiaXNzIjoiZ29ibG9nIn0.8dHyAL-w9eGBJtuf9qqYwfoXnachuZB1vgDbbI9ndBU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "post_id",
+			"value": ""
+		}
+	]
+}
