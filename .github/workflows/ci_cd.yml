@@ -65,7 +65,7 @@ jobs:
         run: go test ./... -v
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/goblog:latest .
+        run: docker build -t ghcr.io/subaruawa486/goblog:latest .
 
       - name: Push to GitHub Container Registry
         run: |
