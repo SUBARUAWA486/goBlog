@@ -1,0 +1,65 @@
+jobs:
+  build-test-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: goblog
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.24
+
+      - name: Install Go dependencies
+        run: go mod tidy
+
+      - name: Wait for MySQL to be ready
+        run: |
+          until mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; do
+            echo "Waiting for MySQL..."
+            sleep 3
+          done
+
+      - name: Run unit tests
+        env:
+          DB_USER: root
+          DB_PASSWORD: root
+          DB_NAME: goblog
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
+        run: go test ./... -v
+
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/goblog:latest .
+
+      - name: Push to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+          docker push ghcr.io/${{ github.repository_owner }}/goblog:latest
